@@ -23,7 +23,9 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import com.dao.impl.GuestDaoImpl;
 import com.dao.impl.Session_FactoryImpl;
 import com.entity.Guest;
+import com.entity.GuestInHotel;
 import com.entity.Room;
+import com.window.Invoice.CreateInvoice;
 
 public class GuestCheckOut {
 	JPanel panel;
@@ -32,7 +34,8 @@ public class GuestCheckOut {
 	JLabel chosenData;
 	JLabel label;
 	DefaultListModel<String> guestsL;
-	ArrayList<Guest> guestsInHotel;
+	ArrayList<GuestInHotel> guestsInHotel;
+	ArrayList<GuestInHotel> result;
 	
 	JButton okButton;
 	JButton back;
@@ -52,16 +55,18 @@ public class GuestCheckOut {
 		panel1 = new JPanel();
 		panel2 = new JPanel();
 		guestsL = new DefaultListModel<String>();
-		guestsInHotel = new ArrayList<Guest>();
+		guestsInHotel = new ArrayList<GuestInHotel>();
 		label = new JLabel("List of Guests in Hotel");
 		scroll = new JScrollPane();
 		panel.add(label);
 		
-		guestsInHotel = (ArrayList<Guest>) guestDao.readAllinHotel();
+	
+		guestsInHotel = (ArrayList<GuestInHotel>) guestDao.readAllinHotel();
 		
 
-		for (Guest g : guestsInHotel) {
-			guestsL.addElement(g.getPesel());
+		for (GuestInHotel g : guestsInHotel) {
+			guestsL.addElement(g.getGuest().getPesel());
+			System.out.println("Oto gosc w Hotelu - "+g.getGuest().getPesel());
 
 		}
 		
@@ -80,6 +85,7 @@ public class GuestCheckOut {
 		back.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
+				ramka.remove(panel);
 				ramka.remove(panel1);
 				ramka.remove(panel2);
 				new GuestWindow(ramka);
@@ -93,17 +99,35 @@ public class GuestCheckOut {
 				Session_FactoryImpl sessionFactory1 = context1.getBean(Session_FactoryImpl.class);
 				SessionFactory sessionFactory = sessionFactory1.SessionFact();
 				try {
-					System.out.println("wykonujeb metode select - wyszukuje obiekt z tabeli Guests");
 					Session session = sessionFactory.openSession();
 					session.beginTransaction();
-					Query q1 = session.createQuery("UPDATE Guest g set room=null where g.Pesel=:pesel");
+					Query q1 = session.createQuery("from GuestInHotel g where g.guest.Pesel =:pesel");
 					q1.setParameter("pesel", guestsListInHotel.getSelectedValue());
-					int result = q1.executeUpdate();
+					result =   (ArrayList<GuestInHotel>) q1.getResultList();
+					session.delete(result.get(0));
+					System.out.println("zostal znaleziony obiekt w liscie gosci - "+result.get(0).getGuest().getPesel());
+					session.delete(result.get(0));
 					session.close();
+			
+					int guestId = result.get(0).getId();
+					System.out.println("guest ID to - "+guestId);
+					
+					System.out.println("wykonujeb metode delete- usune obiekt z tabelu guests in hotel");
+					Session session1 = sessionFactory.openSession();
+					session1.beginTransaction();
+					Query q2 = session1.createQuery("delete GuestInHotel g where g.id =:id");
+					q2.setParameter("id", guestId);
+					//q2.setParameter("pesel", guestsListInHotel.getSelectedValue());
+					int result = q2.executeUpdate();
+					session1.close();
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
 				
+				ramka.remove(panel);
+				ramka.remove(panel1);
+				ramka.remove(panel2);
+				new CreateInvoice(ramka);
 			}
 		});
 	

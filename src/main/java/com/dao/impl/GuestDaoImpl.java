@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.dao.GuestDao;
 import com.dao.Session_Factory;
 import com.entity.Guest;
+import com.entity.GuestInHotel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,6 @@ import javax.persistence.Query;
 
 @Repository
 public class GuestDaoImpl implements GuestDao {
-	List<Guest> result;
 	
 	public void add(Guest guest) {
 		
@@ -71,6 +71,7 @@ public class GuestDaoImpl implements GuestDao {
 	}
 
 	public void read(Guest guest) {
+		List<Guest> result;
 		ApplicationContext context1 = new AnnotationConfigApplicationContext(Session_FactoryImpl.class);
 		Session_FactoryImpl sessionFactory1 = context1.getBean(Session_FactoryImpl.class);
 		SessionFactory sessionFactory = sessionFactory1.SessionFact();
@@ -89,6 +90,7 @@ public class GuestDaoImpl implements GuestDao {
 	}
 
 	public List<Guest> readAll() {
+		List<Guest> result = null;
 		ApplicationContext context1 = new AnnotationConfigApplicationContext(Session_FactoryImpl.class);
 		Session_FactoryImpl sessionFactory1 = context1.getBean(Session_FactoryImpl.class);
 		SessionFactory sessionFactory = sessionFactory1.SessionFact();
@@ -105,7 +107,8 @@ public class GuestDaoImpl implements GuestDao {
 		return result;
 	}
 
-	public List<Guest> readAllinHotel() {
+	public List<GuestInHotel> readAllinHotel() {
+		List<GuestInHotel> result = null;
 		ApplicationContext context1 = new AnnotationConfigApplicationContext(Session_FactoryImpl.class);
 		Session_FactoryImpl sessionFactory1 = context1.getBean(Session_FactoryImpl.class);
 		SessionFactory sessionFactory = sessionFactory1.SessionFact();
@@ -113,7 +116,7 @@ public class GuestDaoImpl implements GuestDao {
 			System.out.println("wykonujeb metode readAll");
 			Session session = sessionFactory.openSession();
 			session.beginTransaction();
-			Query q1 = session.createQuery("from Guest g where room !=null");
+			Query q1 = session.createQuery("from GuestInHotel");
 			result = q1.getResultList();
 			session.close();
 		} catch (Exception e) {

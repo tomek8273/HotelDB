@@ -1,5 +1,6 @@
 package com.window.Room;
 
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +17,7 @@ import com.window.Guest.DatabaaseMainWindow;
 public class RoomMainWindow {
 
 	JPanel panel;
+	JPanel panel1;
 	JButton addRoom;
 	JButton equipmentChange;
 	JButton back;
@@ -26,12 +28,14 @@ public class RoomMainWindow {
 		
 		
 		panel = new JPanel(new FlowLayout());
+		panel1 = new JPanel();
 		back = new JButton("Back");
 
 		panel.add(addRoom);
 		panel.add(equipmentChange);
-		panel.add(back);
-		ramka.add(panel);
+		panel1.add(back);
+		ramka.add(panel,BorderLayout.NORTH);
+		ramka.add(panel1, BorderLayout.SOUTH);
 		ramka.repaint();
 		ramka.revalidate();
 		
@@ -39,6 +43,7 @@ public class RoomMainWindow {
 
 			public void actionPerformed(ActionEvent arg0) {
 				ramka.remove(panel);
+				ramka.remove(panel1);
 				new AddRoom(ramka);
 				ramka.repaint();
 				ramka.validate();

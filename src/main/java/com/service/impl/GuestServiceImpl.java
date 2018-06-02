@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.dao.GuestDao;
 import com.dao.impl.GuestDaoImpl;
 import com.entity.Guest;
+import com.entity.GuestInHotel;
 import com.service.GuestService;
 
 public class GuestServiceImpl implements GuestService {
@@ -49,7 +50,7 @@ public class GuestServiceImpl implements GuestService {
 		return DaoGuest.readAll();
 	}
 	
-	public List<Guest> readAllinHotel(){
+	public List<GuestInHotel> readAllinHotel(){
 		return DaoGuest.readAllinHotel();
 	}
 

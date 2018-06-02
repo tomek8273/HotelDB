@@ -112,6 +112,8 @@ public class GuestWindow {
 				ramka.remove(panel2);
 				ramka.remove(panel3);
 				new GuestCheckOut(ramka);
+				ramka.repaint();
+				ramka.validate();
 				
 			}
 		});

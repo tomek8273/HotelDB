@@ -30,6 +30,7 @@ import com.dao.impl.GuestDaoImpl;
 import com.dao.impl.RoomDaoImpl;
 import com.dao.impl.Session_FactoryImpl;
 import com.entity.Guest;
+import com.entity.GuestInHotel;
 import com.entity.Room;
 
 public class GuestCheckIn {
@@ -56,6 +57,7 @@ public class GuestCheckIn {
 
 	GuestDaoImpl guestDao = new GuestDaoImpl();
 	RoomDaoImpl roomDao = new RoomDaoImpl();
+	GuestInHotel guestInHotel = new GuestInHotel();
 
 	public GuestCheckIn(final JFrame ramka) {
 
@@ -151,8 +153,11 @@ public class GuestCheckIn {
 					r1 = session.createQuery("from Room r Where r.roomNumber =:number");
 					r1.setParameter("number", roomsList.getSelectedValue());
 					resultRoom = (Room) r1.getSingleResult();
-					resultGuest.setRoom(resultRoom);
-					session.save(resultGuest);
+					//resultGuest.setRoom(resultRoom);
+					guestInHotel.setGuest(resultGuest);
+					guestInHotel.setRoom(resultRoom);
+					//session.save(resultGuest);
+					session.save(guestInHotel);
 					session.close();
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -171,6 +176,8 @@ public class GuestCheckIn {
 				ramka.remove(panel1);
 				ramka.remove(panel2);
 				new GuestWindow(ramka);
+				ramka.repaint();
+				ramka.validate();
 			}
 			
 		});
