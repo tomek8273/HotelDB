@@ -24,7 +24,6 @@ public class GuestWindow {
 	JButton guestCheckIn = new JButton("Check-in");
 	JButton guestCheckOut = new JButton("Check-out");
 	
-	
 	public GuestWindow(final JFrame ramka) {
 		panel2 = new JPanel(new FlowLayout());
 		panel = new JPanel();
@@ -62,8 +61,6 @@ public class GuestWindow {
 		panel2.add(GuestsList);
 		panel2.add(guestCheckIn);
 		panel2.add(guestCheckOut);
-		
-		
 		ramka.validate();
 		ramka.repaint();
 		
@@ -76,9 +73,7 @@ public class GuestWindow {
 				new GuestAdd(ramka);
 				ramka.repaint();
 				ramka.validate();
-				
 			}
-			
 		}); 
 		
 		GuestDelete.addActionListener(new ActionListener() {
@@ -88,19 +83,15 @@ public class GuestWindow {
 				ramka.remove(panel2);
 				ramka.remove(panel3);
 				new DeleteGuest(ramka);
-				
 			}
-			
 		});
 		
 		guestCheckIn.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent arg0) {
 				ramka.remove(panel);
 				ramka.remove(panel2);
 				ramka.remove(panel3);
 				new GuestCheckIn(ramka);
-				
 			}
 			
 		});
@@ -114,7 +105,6 @@ public class GuestWindow {
 				new GuestCheckOut(ramka);
 				ramka.repaint();
 				ramka.validate();
-				
 			}
 		});
 		
@@ -126,11 +116,8 @@ public class GuestWindow {
 				ramka.remove(panel3);
 				ApplicationContext context = new AnnotationConfigApplicationContext(DatabaaseMainWindow.class);
 				DatabaaseMainWindow window = context.getBean(DatabaaseMainWindow.class);
-
 				window.WindowDisplay();
-				
 			}
-			
 		});
 	}
 }

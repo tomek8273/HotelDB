@@ -25,8 +25,6 @@ public class RoomMainWindow {
 	public RoomMainWindow(final JFrame ramka) {
 		addRoom = new JButton("ADD Room");
 		equipmentChange = new JButton("Equipment Change");
-		
-		
 		panel = new JPanel(new FlowLayout());
 		panel1 = new JPanel();
 		back = new JButton("Back");
@@ -47,23 +45,16 @@ public class RoomMainWindow {
 				new AddRoom(ramka);
 				ramka.repaint();
 				ramka.validate();
-				
 			}
-			
 		});
 		
 		back.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent arg0) {
 				ramka.remove(panel);
 				ApplicationContext context = new AnnotationConfigApplicationContext(DatabaaseMainWindow.class);
 				DatabaaseMainWindow window = context.getBean(DatabaaseMainWindow.class);
-
 				window.WindowDisplay();
-				
 			}
-			
 		});
 	}
-
 }

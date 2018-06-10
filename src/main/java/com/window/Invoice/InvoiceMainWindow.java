@@ -33,7 +33,6 @@ public class InvoiceMainWindow {
 		panel1.add(back);
 		
 		back.addActionListener(new ActionListener() {
-			
 			public void actionPerformed(ActionEvent e) {
 				ramka.remove(panel);
 				ramka.remove(panel1);
@@ -46,5 +45,4 @@ public class InvoiceMainWindow {
 		ramka.repaint();
 		ramka.validate();
 	}
-
 }

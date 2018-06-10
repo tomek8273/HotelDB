@@ -30,10 +30,6 @@ JButton delete;
 		panel1.add(name1);
 		panel1.add(lastName);
 		panel2.add(delete);
-		
-		
-		
-		
 	}
 
 }
