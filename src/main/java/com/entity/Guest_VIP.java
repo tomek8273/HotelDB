@@ -17,7 +17,6 @@ public class Guest_VIP {
 	@OneToOne (cascade = CascadeType.ALL)
 	private Guest guest;
 	
-	
 	public int getId() {
 		return id;
 	}
@@ -41,5 +40,4 @@ public class Guest_VIP {
 	public void setGuest(Guest guest) {
 		this.guest = guest;
 	}
-	
 }

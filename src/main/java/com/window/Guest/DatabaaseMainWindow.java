@@ -21,7 +21,7 @@ import com.window.Room.RoomMainWindow;
 
 @Component
 public class DatabaaseMainWindow {
-	
+
 	static JFrame ramka;
 	JPanel panel;
 	JPanel panel2;
@@ -44,20 +44,17 @@ public class DatabaaseMainWindow {
 		JButton Guest = new JButton("Guest");
 		JButton Rooms = new JButton("Room");
 		JButton Invoice = new JButton("Invoice");
-	
-		
-		Dimension dim = new Dimension(100,50);
-		Guest.setPreferredSize(dim);
-		Rooms.setPreferredSize(new Dimension(100,50));
-		Invoice.setPreferredSize(new Dimension(100,50));
 
-		// panel2.setLayout(new GridLayout(2,2));
+		Dimension dim = new Dimension(100, 50);
+		Guest.setPreferredSize(dim);
+		Rooms.setPreferredSize(new Dimension(100, 50));
+		Invoice.setPreferredSize(new Dimension(100, 50));
+
 		panel2.setLayout(new FlowLayout());
 		panel2.add(Guest);
 		panel2.add(Rooms);
 		panel2.add(Invoice);
-		
-		// panel2.setLayout();
+
 		ramka.validate();
 		ramka.repaint();
 
@@ -68,36 +65,27 @@ public class DatabaaseMainWindow {
 				ramka.repaint();
 				ramka.validate();
 				new GuestWindow(ramka);
-		
-			
-
 			}
 		});
-		
-		Rooms.addActionListener(new ActionListener() {
 
+		Rooms.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ramka.remove(panel);
 				ramka.remove(panel2);
 				ramka.repaint();
 				ramka.validate();
 				new RoomMainWindow(ramka);
-				
-			}
-			
-		});
-		
-		Invoice.addActionListener(new ActionListener() {
 
+			}
+
+		});
+
+		Invoice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ramka.remove(panel);
 				ramka.remove(panel2);
 				new InvoiceMainWindow(ramka);
-				
 			}
-			
 		});
-
 	}
-
 }

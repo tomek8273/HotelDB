@@ -1,15 +1,9 @@
 package com.service.impl;
 
-
-import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import com.dao.GuestDao;
-import com.dao.impl.GuestDaoImpl;
 import com.entity.Guest;
-import com.entity.GuestInHotel;
 import com.service.GuestService;
 
 public class GuestServiceImpl implements GuestService {
@@ -19,12 +13,10 @@ public class GuestServiceImpl implements GuestService {
 
 	public void addGuest(Guest guest) {
 		DaoGuest.add(guest);
-
 	}
 
 	public void removeGuest(Guest guest) {
 		DaoGuest.remove(guest);
-
 	}
 
 	public GuestDao getDaoGuest() {
@@ -42,7 +34,6 @@ public class GuestServiceImpl implements GuestService {
 
 	public void readGuestList(Guest guest) {
 		DaoGuest.read(guest);
-
 	}
 
 	public List<Guest> readAll() {
@@ -50,7 +41,7 @@ public class GuestServiceImpl implements GuestService {
 		return DaoGuest.readAll();
 	}
 	
-	public List<GuestInHotel> readAllinHotel(){
+	public List<Guest> readAllinHotel(){
 		return DaoGuest.readAllinHotel();
 	}
 

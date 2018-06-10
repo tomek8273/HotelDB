@@ -2,9 +2,11 @@ package com.entity;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,8 +19,17 @@ public class Room {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String roomNumber;
-	private String number_of_beds;
+	private String roomNumberOfBeds;
 	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<Guest> guests = new ArrayList<Guest>();
+	
+	public List<Guest> getGuests() {
+		return guests;
+	}
+	public void setGuests(List<Guest> guests) {
+		this.guests = guests;
+	}
 	public int getId() {
 		return id;
 	}
@@ -32,16 +43,11 @@ public class Room {
 		this.roomNumber = string;
 	}
 	public String getNumber_of_beds() {
-		return number_of_beds;
+		return roomNumberOfBeds;
 	}
 	public void setNumber_of_beds(String string) {
-		this.number_of_beds = string;
+		this.roomNumberOfBeds = string;
 	}
 	
-	//@OneToOne (cascade = CascadeType.ALL)
-	//private Equipment equpiment;
-	
-	//@OneToMany (cascade = CascadeType.ALL)
-	//private Collection<Room_service> room_service_list = new ArrayList<Room_service>();
 	
 }

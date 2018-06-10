@@ -15,9 +15,7 @@
 		<property name="hibernate.connection.password">Zukunft3</property>
 		<property name="hibernate.show_sql">true</property>
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
-
 		<property name="hibernate.hbm2ddl.auto">update</property>
-
 
 		<!-- add classes to map from here -->
 		<mapping class="com.entity.Equipment" />
@@ -25,7 +23,6 @@
 		<mapping class="com.entity.Guest" />
 		<mapping class="com.entity.Invoice" />
 		<mapping class="com.entity.Room_service" />
-		<mapping class="com.entity.Room" />
-		<mapping class="com.entity.GuestInHotel" />
+		<mapping class="com.entity.Room" />	
 	</session-factory>
 </hibernate-configuration>

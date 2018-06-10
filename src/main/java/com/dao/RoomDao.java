@@ -6,6 +6,7 @@ import com.entity.Guest;
 import com.entity.Room;
 
 public interface RoomDao {
+	
 	public void addRoom(Room room);
 	
 	public void addEquipment();

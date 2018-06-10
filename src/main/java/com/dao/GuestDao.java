@@ -1,10 +1,8 @@
 package com.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.entity.Guest;
-import com.entity.GuestInHotel;
 
 public interface GuestDao {
 	
@@ -18,6 +16,6 @@ public interface GuestDao {
 	
 	public List<Guest> readAll();
 	
-	public List<GuestInHotel> readAllinHotel();
+	public List<Guest> readAllinHotel();
 	
 }

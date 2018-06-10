@@ -1,8 +1,6 @@
 package com.window.Guest;
 
 import java.awt.BorderLayout;
-
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -15,15 +13,10 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
 import com.dao.impl.GuestDaoImpl;
 import com.dao.impl.Session_FactoryImpl;
 import com.entity.Guest;
@@ -36,19 +29,14 @@ public class DeleteGuest {
 	JLabel label;
 	DefaultListModel<String> guestsL;
 	ArrayList<Guest> guestsList;
-
 	JButton okButton;
 	JButton back;
-
 	JScrollPane scroll;
-
 	JList<String> guestsList1;
 	GuestDaoImpl guestDao;
-	
 	Query q1;
 
 	public DeleteGuest(final JFrame ramka) {
-
 		guestDao = new GuestDaoImpl();
 		guestsL = new DefaultListModel<String>();
 		okButton = new JButton("OK");
@@ -66,7 +54,6 @@ public class DeleteGuest {
 
 		for (Guest g : guestsList) {
 			guestsL.addElement(g.getPesel());
-
 		}
 
 		guestsList1 = new JList(guestsL);
@@ -82,7 +69,6 @@ public class DeleteGuest {
 		ramka.validate();
 
 		back.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
 				ramka.remove(panel1);
 				ramka.remove(panel2);
@@ -90,9 +76,7 @@ public class DeleteGuest {
 			}
 		});
 		
-		
 		okButton.addActionListener(new ActionListener() {
-			
 			public void actionPerformed(ActionEvent e) {
 				ApplicationContext context1 = new AnnotationConfigApplicationContext(Session_FactoryImpl.class);
 				Session_FactoryImpl sessionFactory1 = context1.getBean(Session_FactoryImpl.class);
@@ -101,7 +85,7 @@ public class DeleteGuest {
 					System.out.println("wykonujeb metode DELETE - usowam wybranego goscia");
 					Session session = sessionFactory.openSession();
 					session.beginTransaction();
-					q1 = session.createQuery("delete Guest g Where g.Pesel =:pesel");
+					q1 = session.createQuery("delete Guest g Where g.guestPesel =:pesel");
 					q1.setParameter("pesel", guestsList1.getSelectedValue());
 					int result = q1.executeUpdate();
 					session.close();

@@ -9,24 +9,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+
 
 @Entity
 public class Guest {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String first_name;
-	private String last_name;
-	private String date_of_birth;
-	private String Pesel;
+	private String guestFirstName;
+	private String guestLastName;
+	private String guestDateOfBirth;
+	private String guestPesel;
 
 	@OneToMany (cascade = CascadeType.ALL)
 	private Collection<Invoice> invoice_list = new ArrayList<Invoice>();
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	private Room room;
-
 	public int getId() {
 		return id;
 	}
@@ -36,44 +33,37 @@ public class Guest {
 	}
 
 	public String getFirst_name() {
-		return first_name;
+		return guestFirstName;
 	}
 
 	public void setFirst_name(String first_name) {
-		this.first_name = first_name;
+		this.guestFirstName = first_name;
 	}
 
 	public String getLast_name() {
-		return last_name;
+		return guestLastName;
 	}
 
 	public void setLast_name(String last_mame) {
-		this.last_name = last_mame;
+		this.guestLastName = last_mame;
 	}
 
 	public String getDate_of_birth() {
-		return date_of_birth;
+		return guestDateOfBirth;
 	}
 
 	public void setDate_of_birth(String date_of_birth) {
-		this.date_of_birth = date_of_birth;
+		this.guestDateOfBirth = date_of_birth;
 	}
 
 	public String getPesel() {
-		return Pesel;
+		return guestPesel;
 	}
 
 	public void setPesel(String pesel) {
-		Pesel = pesel;
+		guestPesel = pesel;
 	}
 
-	public Room getRoom() {
-		return room;
-	}
-
-	public void setRoom(Room room) {
-		this.room = room;
-	}
 
 	public Collection<Invoice> getInvoice_list() {
 		return invoice_list;
@@ -82,5 +72,4 @@ public class Guest {
 	public void setInvoice_list(Collection<Invoice> invoice_list) {
 		this.invoice_list = invoice_list;
 	} 
-	
 }

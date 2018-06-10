@@ -11,12 +11,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
-import com.dao.impl.GuestDaoImpl;
 import com.dao.impl.RoomDaoImpl;
 import com.dao.impl.Session_FactoryImpl;
 import com.entity.Room;
@@ -55,23 +52,18 @@ public class AddRoom {
 		ramka.validate();
 
 		okButton.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
+			
 				Room room = new Room();
 				room.setNumber_of_beds(numberOfBeds.getText());
 				room.setRoomNumber(roomNumber.getText());
-
 				ApplicationContext context1 = new AnnotationConfigApplicationContext(RoomDaoImpl.class);
 				RoomDaoImpl roomDao = context1.getBean(RoomDaoImpl.class);
-
 				roomDao.addRoom(room);
-
 			}
-
 		});
 
 		back.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
 				ramka.remove(panel1);
 				ramka.remove(panel2);
