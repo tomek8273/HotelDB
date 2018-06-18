@@ -22,21 +22,21 @@ import com.dao.impl.Session_FactoryImpl;
 import com.entity.Guest;
 
 public class DeleteGuest {
-	JPanel panel;
-	JPanel panel1;
-	JPanel panel2;
-	JLabel chosenData;
-	JLabel label;
-	DefaultListModel<String> guestsL;
-	ArrayList<Guest> guestsList;
-	JButton okButton;
-	JButton back;
-	JScrollPane scroll;
-	JList<String> guestsList1;
-	GuestDaoImpl guestDao;
-	Query q1;
+	private JPanel panel;
+	private JPanel panel1;
+	private JPanel panel2;
+	private JLabel label;
+	private DefaultListModel<String> guestsL;
+	private ArrayList<Guest> guestsList;
+	private JButton okButton;
+	private JButton back;
+	private JScrollPane scroll;
+	private JList<String> guestsList1;
+	private GuestDaoImpl guestDao;
+	private Query q1;
 
 	public DeleteGuest(final JFrame ramka) {
+		
 		guestDao = new GuestDaoImpl();
 		guestsL = new DefaultListModel<String>();
 		okButton = new JButton("OK");
@@ -77,7 +77,9 @@ public class DeleteGuest {
 		});
 		
 		okButton.addActionListener(new ActionListener() {
+			
 			public void actionPerformed(ActionEvent e) {
+				
 				ApplicationContext context1 = new AnnotationConfigApplicationContext(Session_FactoryImpl.class);
 				Session_FactoryImpl sessionFactory1 = context1.getBean(Session_FactoryImpl.class);
 				SessionFactory sessionFactory = sessionFactory1.SessionFact();
@@ -92,7 +94,7 @@ public class DeleteGuest {
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
-				
+				((AnnotationConfigApplicationContext)context1).close();
 			}
 		});
 

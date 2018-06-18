@@ -1,7 +1,6 @@
 package com.entity;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -11,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 @Entity
 public class Room {
@@ -24,9 +22,13 @@ public class Room {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Guest> guests = new ArrayList<Guest>();
 	
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Equipment> equipmentInRoom = new ArrayList<Equipment>();
+	
 	public List<Guest> getGuests() {
 		return guests;
 	}
+	
 	public void setGuests(List<Guest> guests) {
 		this.guests = guests;
 	}

@@ -12,12 +12,12 @@ import com.window.Guest.GuestWindow;
 
 public class InvoiceMainWindow {
 
-	JPanel panel;
-	JPanel panel1;
-	JButton invoiceAdd;
-	JButton invoicePay;
-	JButton invoiceList;
-	JButton back;
+	private JPanel panel;
+	private JPanel panel1;
+	private JButton invoiceAdd;
+	private JButton invoicePay;
+	private JButton invoiceList;
+	private JButton back;
 	
 	public InvoiceMainWindow(final JFrame ramka) {
 		panel = new JPanel();

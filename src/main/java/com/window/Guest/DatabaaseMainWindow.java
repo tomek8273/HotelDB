@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -23,8 +21,8 @@ import com.window.Room.RoomMainWindow;
 public class DatabaaseMainWindow {
 
 	static JFrame ramka;
-	JPanel panel;
-	JPanel panel2;
+	private JPanel panel;
+	private JPanel panel2;
 
 	public void WindowDisplay() {
 		panel2 = new JPanel();

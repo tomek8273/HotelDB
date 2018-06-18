@@ -4,6 +4,7 @@ import org.hibernate.Session;
 
 import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Repository;
 import com.dao.GuestDao;
@@ -18,7 +19,7 @@ public class GuestDaoImpl implements GuestDao {
 
 	public void add(Guest guest) {
 		System.out.println("Wywolana metoda addGuest");
-		Session_FactoryImpl q = new Session_FactoryImpl();
+		//Session_FactoryImpl q = new Session_FactoryImpl();
 		ApplicationContext context1 = new AnnotationConfigApplicationContext(Session_FactoryImpl.class);
 		Session_FactoryImpl sessionFactory1 = context1.getBean(Session_FactoryImpl.class);
 		SessionFactory sessionFactory = sessionFactory1.SessionFact();
@@ -30,6 +31,7 @@ public class GuestDaoImpl implements GuestDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		((AnnotationConfigApplicationContext)context1).close();
 	}
 
 	public void remove(Guest guest) {
@@ -45,6 +47,7 @@ public class GuestDaoImpl implements GuestDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		((AnnotationConfigApplicationContext)context1).close();
 	}
 
 	public void update(Guest guest) {
@@ -64,10 +67,11 @@ public class GuestDaoImpl implements GuestDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		((AnnotationConfigApplicationContext)context1).close();
 	}
 
 	public List<Guest> readAll() {
+		
 		List<Guest> result = new ArrayList<Guest>();
 		ApplicationContext context1 = new AnnotationConfigApplicationContext(Session_FactoryImpl.class);
 		Session_FactoryImpl sessionFactory1 = context1.getBean(Session_FactoryImpl.class);
@@ -82,7 +86,9 @@ public class GuestDaoImpl implements GuestDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		((AnnotationConfigApplicationContext)context1).close();
 		return result;
+	
 	}
 
 	public ArrayList<Guest> readAllinHotel() {
@@ -124,6 +130,7 @@ public class GuestDaoImpl implements GuestDao {
 			e.printStackTrace();
 		}
 		System.out.println("Wychodze z pentli readAll");
+		((AnnotationConfigApplicationContext)context1).close();
 		return result;
 	}
 }

@@ -67,7 +67,7 @@ public class GuestCheckIn {
 			guestL.addElement(g.getFirst_name() + " " + g.getLast_name() + " " + g.getPesel());
 		}
 		System.out.println(guestL);
-
+				
 		System.out.println("przed petla tworzaca liste pokoi");
 		for (Room rr : roomsList1) {
 			roomsL.addElement(rr.getRoomNumber());
@@ -113,6 +113,7 @@ public class GuestCheckIn {
 
 		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
 				ApplicationContext context1 = new AnnotationConfigApplicationContext(Session_FactoryImpl.class);
 				Session_FactoryImpl sessionFactory1 = context1.getBean(Session_FactoryImpl.class);
 				SessionFactory sessionFactory = sessionFactory1.SessionFact();
@@ -130,7 +131,9 @@ public class GuestCheckIn {
 					e.printStackTrace();
 					System.out.println("Operacja niemozliwa, wiele rekordow w bazie");
 				}
+				
 				try {
+					
 					System.out.println("wykonujeb metode select - wyszukuje obiekt z tabeli Room");
 					Session session = sessionFactory.openSession();
 					session.beginTransaction();
@@ -143,15 +146,17 @@ public class GuestCheckIn {
 					session.save(resultRoom);
 					session.getTransaction().commit();
 					session.close();
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
+				((AnnotationConfigApplicationContext)context1).close();
 			}
 
 		});
 
 		backButton.addActionListener(new ActionListener() {
+			
 			public void actionPerformed(ActionEvent arg0) {
 				ramka.remove(panel1);
 				ramka.remove(panel2);

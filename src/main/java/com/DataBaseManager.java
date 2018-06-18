@@ -12,5 +12,7 @@ public class DataBaseManager {
 		ApplicationContext context = new AnnotationConfigApplicationContext(DatabaaseMainWindow.class);
 		DatabaaseMainWindow window = context.getBean(DatabaaseMainWindow.class);
 		window.WindowDisplay();
+		((AnnotationConfigApplicationContext)context).close();
+		
 	}
 }

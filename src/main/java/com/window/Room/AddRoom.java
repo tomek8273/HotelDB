@@ -11,22 +11,20 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import com.dao.impl.RoomDaoImpl;
-import com.dao.impl.Session_FactoryImpl;
 import com.entity.Room;
 
 public class AddRoom {
-	JPanel panel1;
-	JPanel panel2;
-	JLabel label;
-	JTextField roomNumber;
-	JButton okButton;
-	JTextField numberOfBeds;
-	JLabel label2;
-	JButton back;
+	private JPanel panel1;
+	private JPanel panel2;
+	private JLabel label;
+	private JTextField roomNumber;
+	private JButton okButton;
+	private JTextField numberOfBeds;
+	private JLabel label2;
+	private JButton back;
 
 	public AddRoom(final JFrame ramka) {
 		panel1 = new JPanel();
@@ -60,6 +58,7 @@ public class AddRoom {
 				ApplicationContext context1 = new AnnotationConfigApplicationContext(RoomDaoImpl.class);
 				RoomDaoImpl roomDao = context1.getBean(RoomDaoImpl.class);
 				roomDao.addRoom(room);
+				((AnnotationConfigApplicationContext)context1).close();
 			}
 		});
 

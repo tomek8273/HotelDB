@@ -26,25 +26,22 @@ import com.entity.Room;
 import com.window.Invoice.CreateInvoice;
 
 public class GuestCheckOut {
-	JPanel panel;
-	JPanel panel1;
-	JPanel panel2;
-	JLabel chosenData;
-	JLabel label;
-	DefaultListModel<String> guestsL;
-	ArrayList<Guest> guestsInHotel;
-	// ArrayList<GuestInHotel> result;
-	ArrayList<Room> listOfRooms = new ArrayList<Room>();
-	int roomWithGuest;
-	String guestPesel;
+	private JPanel panel;
+	private JPanel panel1;
+	private JPanel panel2;
+	private JLabel label;
+	private DefaultListModel<String> guestsL;
+	private ArrayList<Guest> guestsInHotel;
+	private ArrayList<Room> listOfRooms = new ArrayList<Room>();
+	static Guest guestForInvoice;
 
-	JButton okButton;
-	JButton back;
+	private JButton okButton;
+	private JButton back;
 
-	JScrollPane scroll;
+	private JScrollPane scroll;
 
-	JList<String> guestsListInHotel;
-	GuestDaoImpl guestDao;
+	private JList<String> guestsListInHotel;
+	private GuestDaoImpl guestDao;
 
 	public GuestCheckOut(final JFrame ramka) {
 
@@ -109,7 +106,7 @@ public class GuestCheckOut {
 						for (Guest g : r.getGuests()) {
 							if (g.getPesel().equals(guestsListInHotel.getSelectedValue())) {
 								System.out.println("Znaleziono goscia do usuniecia");
-								roomWithGuest = r.getId();
+								guestForInvoice = g;
 								Session session1 = sessionFactory.openSession();
 								session1.beginTransaction();
 								r.getGuests().remove(g);
@@ -127,7 +124,8 @@ public class GuestCheckOut {
 				ramka.remove(panel);
 				ramka.remove(panel1);
 				ramka.remove(panel2);
-				new CreateInvoice(ramka);
+				new CreateInvoice(ramka, guestForInvoice);
+				((AnnotationConfigApplicationContext)context1).close();
 			}
 		});
 

@@ -11,8 +11,5 @@ public class Room_service {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private boolean water;
-	private boolean food;
-	private int value;
 	
 }

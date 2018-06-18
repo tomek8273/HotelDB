@@ -78,6 +78,7 @@ public class GuestAdd {
 				ApplicationContext context1 = new AnnotationConfigApplicationContext(GuestDaoImpl.class);
 				GuestDaoImpl guestDao = context1.getBean(GuestDaoImpl.class);
 				guestDao.add(guest);
+				((AnnotationConfigApplicationContext)context1).close();
 			}
 		});
 

@@ -3,7 +3,6 @@ package com.window.Guest;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,12 +16,11 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 public class GuestWindow {
 	
-	JPanel panel2;
-	JPanel panel;
-	JPanel panel3;
-	JFrame ramka1;
-	JButton guestCheckIn = new JButton("Check-in");
-	JButton guestCheckOut = new JButton("Check-out");
+	private JPanel panel2;
+	private JPanel panel;
+	private JPanel panel3;
+	private JButton guestCheckIn = new JButton("Check-in");
+	private JButton guestCheckOut = new JButton("Check-out");
 	
 	public GuestWindow(final JFrame ramka) {
 		panel2 = new JPanel(new FlowLayout());
@@ -37,15 +35,15 @@ public class GuestWindow {
 		ramka.setVisible(true);
 		ramka.setSize(500, 500);
 		
-		JButton Guestadd = new JButton("New Guest");
-		JButton GuestDelete = new JButton("Guest Delete");
-		JButton GuestUpdate = new JButton("Guet Update");
-		JButton GuestsList = new JButton("Guests List");
+		JButton guestadd = new JButton("New Guest");
+		JButton guestDelete = new JButton("Guest Delete");
+		JButton guestUpdate = new JButton("Guet Update");
+		JButton guestsList = new JButton("Guests List");
 		
-		Guestadd.setPreferredSize(new Dimension(150,50));
-		GuestDelete.setPreferredSize(new Dimension(150,50));
-		GuestUpdate.setPreferredSize(new Dimension(150,50));
-		GuestsList.setPreferredSize(new Dimension(150,50));
+		guestadd.setPreferredSize(new Dimension(150,50));
+		guestDelete.setPreferredSize(new Dimension(150,50));
+		guestUpdate.setPreferredSize(new Dimension(150,50));
+		guestsList.setPreferredSize(new Dimension(150,50));
 		guestCheckIn.setPreferredSize(new Dimension(150, 50));
 		guestCheckOut.setPreferredSize(new Dimension(150, 50));
 		
@@ -55,16 +53,16 @@ public class GuestWindow {
 		JLabel label = new JLabel("Guest Menu");
 		panel.add(label);
 		
-		panel2.add(Guestadd);
-		panel2.add(GuestDelete);
-		panel2.add(GuestUpdate);
-		panel2.add(GuestsList);
+		panel2.add(guestadd);
+		panel2.add(guestDelete);
+		panel2.add(guestUpdate);
+		panel2.add(guestsList);
 		panel2.add(guestCheckIn);
 		panel2.add(guestCheckOut);
 		ramka.validate();
 		ramka.repaint();
 		
-		Guestadd.addActionListener (new ActionListener() {
+		guestadd.addActionListener (new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 				ramka.remove(panel);
@@ -76,7 +74,7 @@ public class GuestWindow {
 			}
 		}); 
 		
-		GuestDelete.addActionListener(new ActionListener() {
+		guestDelete.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
 				ramka.remove(panel);
@@ -117,6 +115,20 @@ public class GuestWindow {
 				ApplicationContext context = new AnnotationConfigApplicationContext(DatabaaseMainWindow.class);
 				DatabaaseMainWindow window = context.getBean(DatabaaseMainWindow.class);
 				window.WindowDisplay();
+				((AnnotationConfigApplicationContext)context).close();
+			}
+		});
+		
+		guestsList.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				ramka.remove(panel);
+				ramka.remove(panel2);
+				ramka.remove(panel3);
+				new GuestsList(ramka);
+				ramka.repaint();
+				ramka.validate();
+				
 			}
 		});
 	}

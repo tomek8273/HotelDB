@@ -2,7 +2,6 @@ package com.dao;
 
 import java.util.List;
 
-import com.entity.Guest;
 import com.entity.Room;
 
 public interface RoomDao {

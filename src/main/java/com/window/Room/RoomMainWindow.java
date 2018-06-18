@@ -48,12 +48,24 @@ public class RoomMainWindow {
 			}
 		});
 		
+		equipmentChange.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				ramka.remove(panel);
+				ramka.remove(panel1);
+				new EqupimentChange(ramka);
+				ramka.repaint();
+				ramka.validate();
+			}
+		});
+		
 		back.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ramka.remove(panel);
 				ApplicationContext context = new AnnotationConfigApplicationContext(DatabaaseMainWindow.class);
 				DatabaaseMainWindow window = context.getBean(DatabaaseMainWindow.class);
 				window.WindowDisplay();
+				((AnnotationConfigApplicationContext)context).close();
 			}
 		});
 	}

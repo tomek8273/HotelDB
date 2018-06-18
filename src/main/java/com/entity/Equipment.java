@@ -10,8 +10,19 @@ public class Equipment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private int numberOfTables;
-	private int numberOfBeds;
-	private int numberOfTV;
-	private int numberOfPhones;
+	private String equipmentElement;
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getEquipmentElement() {
+		return equipmentElement;
+	}
+	public void setEquipmentElement(String equipmentElement) {
+		this.equipmentElement = equipmentElement;
+	}
+
 }

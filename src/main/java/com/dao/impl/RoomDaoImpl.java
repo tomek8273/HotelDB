@@ -31,6 +31,7 @@ public class RoomDaoImpl implements RoomDao{
 			} catch (Exception e) {
 				e.printStackTrace();
 			}	
+			((AnnotationConfigApplicationContext)context1).close();
 	}
 
 	public void addEquipment() {
@@ -64,6 +65,7 @@ public class RoomDaoImpl implements RoomDao{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		((AnnotationConfigApplicationContext)context1).close();
 		return result;
 	}
 }
