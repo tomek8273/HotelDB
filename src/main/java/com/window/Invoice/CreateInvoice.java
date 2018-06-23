@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -31,6 +32,7 @@ public class CreateInvoice {
 	private JTextField invoiceValue;
 	private JTextField invoiceNumber;
 	private JTextField paid;
+	private static Logger log = Logger.getLogger(CreateInvoice.class);
 
 	public CreateInvoice(final JFrame ramka, final Guest guest) {
 		panel1 = new JPanel();
@@ -64,6 +66,7 @@ public class CreateInvoice {
 		back.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
+				log.info("Wcisniety przycisk BACK");
 				ramka.remove(panel1);
 				ramka.remove(panel2);
 				new GuestWindow(ramka);
@@ -76,7 +79,7 @@ public class CreateInvoice {
 		okButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Wcisniety przycisk ok");
+				log.info("Wcisniety przycisk OK");
 				Invoice invoice = new Invoice();
 				invoice.setInvoiceValue(invoiceValue.getText());
 				invoice.setInvoiceNumber(invoiceNumber.getText());

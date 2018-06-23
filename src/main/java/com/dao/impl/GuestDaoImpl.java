@@ -1,29 +1,30 @@
 package com.dao.impl;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Repository;
 import com.dao.GuestDao;
 import com.entity.Guest;
 import com.entity.Room;
+import com.window.Guest.GuestCheckIn;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Query;
 
 @Repository
 public class GuestDaoImpl implements GuestDao {
+	private static Logger log = Logger.getLogger(GuestDaoImpl.class);
 
 	public void add(Guest guest) {
-		System.out.println("Wywolana metoda addGuest");
-		//Session_FactoryImpl q = new Session_FactoryImpl();
+		log.info("Wykonywana metoda AddGuest");
 		ApplicationContext context1 = new AnnotationConfigApplicationContext(Session_FactoryImpl.class);
 		Session_FactoryImpl sessionFactory1 = context1.getBean(Session_FactoryImpl.class);
 		SessionFactory sessionFactory = sessionFactory1.SessionFact();
-		System.out.println("Wywolana metoda addGuest");
 		try {
 			Session session = sessionFactory.openSession();
 			session.save(guest);
@@ -39,13 +40,14 @@ public class GuestDaoImpl implements GuestDao {
 		Session_FactoryImpl sessionFactory1 = context1.getBean(Session_FactoryImpl.class);
 		SessionFactory sessionFactory = sessionFactory1.SessionFact();
 		try {
-			System.out.println("wykonujeb metode delete");
+			log.info("Wykonywana metoda REMOVE guest");
 			Session session = sessionFactory.openSession();
 			session.beginTransaction();
 			session.delete(guest);
 			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.info("Wyj¹tek w czasie tranzakcji");
 		}
 		((AnnotationConfigApplicationContext)context1).close();
 	}
@@ -59,7 +61,7 @@ public class GuestDaoImpl implements GuestDao {
 		Session_FactoryImpl sessionFactory1 = context1.getBean(Session_FactoryImpl.class);
 		SessionFactory sessionFactory = sessionFactory1.SessionFact();
 		try {
-			System.out.println("wykonujeb metode read");
+			log.info("Wykonywana metdoa READ guest");
 			Session session = sessionFactory.openSession();
 			session.beginTransaction();
 			
@@ -77,7 +79,7 @@ public class GuestDaoImpl implements GuestDao {
 		Session_FactoryImpl sessionFactory1 = context1.getBean(Session_FactoryImpl.class);
 		SessionFactory sessionFactory = sessionFactory1.SessionFact();
 		try {
-			System.out.println("wykonujeb metode readAll");
+			log.info("Wykonywana metdoa READALL guests");
 			Session session = sessionFactory.openSession();
 			session.beginTransaction();
 			Query q1 = session.createQuery("from Guest");
@@ -87,6 +89,7 @@ public class GuestDaoImpl implements GuestDao {
 			e.printStackTrace();
 		}
 		((AnnotationConfigApplicationContext)context1).close();
+		log.info("Koniec metody READALL guests");
 		return result;
 	
 	}
@@ -99,7 +102,6 @@ public class GuestDaoImpl implements GuestDao {
 		Session_FactoryImpl sessionFactory1 = context1.getBean(Session_FactoryImpl.class);
 		SessionFactory sessionFactory = sessionFactory1.SessionFact();
 		try {
-			System.out.println("wykonujeb metode readAll");
 			Session session = sessionFactory.openSession();
 			session.beginTransaction();
 			Query q1 = session.createQuery("from Room");
@@ -114,14 +116,14 @@ public class GuestDaoImpl implements GuestDao {
 			e.printStackTrace();
 		}
 		try {
-			System.out.println("wykonujeb metode readAll");
+			log.info("Wykonuje metode ReadAll");
 			Session session = sessionFactory.openSession();
 			session.beginTransaction();
 			System.out.println("Oto lista gosci");
 			for (Room r : listOfRooms) {
-				System.out.println("Oto pokoj - " + r.getRoomNumber());
+				log.info("Oto pokoj - "+r.getRoomNumber());
 				for (Guest g:r.getGuests()) {
-					System.out.println("Oto lista gosci - " + g.getPesel());
+					log.info("Oto dodany element do listy gosci - "+g.getPesel());
 					result.add(g);
 				}
 				session.close();
@@ -129,7 +131,7 @@ public class GuestDaoImpl implements GuestDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("Wychodze z pentli readAll");
+		log.info("Wychodze z metody READALL");
 		((AnnotationConfigApplicationContext)context1).close();
 		return result;
 	}

@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import com.window.Invoice.InvoiceMainWindow;
@@ -23,11 +24,12 @@ public class DatabaaseMainWindow {
 	static JFrame ramka;
 	private JPanel panel;
 	private JPanel panel2;
+	
+	private static Logger log = Logger.getLogger(DatabaaseMainWindow.class);
 
-	public void WindowDisplay() {
+	public void WindowDisplay(final JFrame ramka) {
 		panel2 = new JPanel();
 		panel = new JPanel();
-		ramka = new JFrame();
 
 		panel2.setBounds(100, 100, 200, 200);
 		ramka.add(panel2, BorderLayout.CENTER);
@@ -58,31 +60,35 @@ public class DatabaaseMainWindow {
 
 		Guest.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				log.info("Wcisniety przycisk GUEST");
 				ramka.remove(panel);
 				ramka.remove(panel2);
+				new GuestWindow(ramka);
 				ramka.repaint();
 				ramka.validate();
-				new GuestWindow(ramka);
 			}
 		});
 
 		Rooms.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				log.info("Wcisniety przycisk ROOM");
 				ramka.remove(panel);
 				ramka.remove(panel2);
+				new RoomMainWindow(ramka);
 				ramka.repaint();
 				ramka.validate();
-				new RoomMainWindow(ramka);
-
 			}
 
 		});
 
 		Invoice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				log.info("Wycisniety przycisk INVOICE");
 				ramka.remove(panel);
 				ramka.remove(panel2);
 				new InvoiceMainWindow(ramka);
+				ramka.repaint();
+				ramka.validate();
 			}
 		});
 	}

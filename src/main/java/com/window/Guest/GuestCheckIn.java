@@ -14,6 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+import org.apache.log4j.Logger;
 import org.hibernate.NonUniqueResultException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -26,29 +28,30 @@ import com.entity.Guest;
 import com.entity.Room;
 
 public class GuestCheckIn {
-	JPanel panel1;
-	JPanel panel2;
-	JLabel chosenData;
-	JLabel data;
-	JLabel data1;
-	Guest resultGuest = new Guest();
-	Room resultRoom = new Room();
-	Room room = new Room();
+	private JPanel panel1;
+	private JPanel panel2;
+	private JLabel chosenData;
+	private JLabel data;
+	private JLabel data1;
+	private Guest resultGuest = new Guest();
+	private Room resultRoom = new Room();
+	private Room room = new Room();
+	private static Logger log = Logger.getLogger(GuestCheckIn.class);
 
-	JList<String> guestList;
-	JList<String> roomsList;
-	JButton okButton;
-	DefaultListModel<String> guestL;
-	DefaultListModel<String> roomsL;
-	List<Guest> guestsList;
-	List<Room> roomsList1;
-	JScrollPane scroll;
-	JButton backButton;
-	Query q1;
-	Query r1;
+	private JList<String> guestList;
+	private JList<String> roomsList;
+	private JButton okButton;
+	private DefaultListModel<String> guestL;
+	private DefaultListModel<String> roomsL;
+	private List<Guest> guestsList;
+	private List<Room> roomsList1;
+	private JScrollPane scroll;
+	private JButton backButton;
+	private Query q1;
+	private Query r1;
 
-	GuestDaoImpl guestDao = new GuestDaoImpl();
-	RoomDaoImpl roomDao = new RoomDaoImpl();
+	private GuestDaoImpl guestDao;
+	private RoomDaoImpl roomDao;
 
 	public GuestCheckIn(final JFrame ramka) {
 
@@ -58,24 +61,31 @@ public class GuestCheckIn {
 		data = new JLabel();
 		data1 = new JLabel();
 		backButton = new JButton("Back");
-
+		
+		ApplicationContext context1 = new AnnotationConfigApplicationContext(GuestDaoImpl.class);
+		guestDao= context1.getBean(GuestDaoImpl.class);
+		((AnnotationConfigApplicationContext)context1).close();
+		
+		ApplicationContext context2 = new AnnotationConfigApplicationContext(RoomDaoImpl.class);
+		roomDao= context2.getBean(RoomDaoImpl.class);
+		((AnnotationConfigApplicationContext)context2).close();
+		
 		guestsList = guestDao.readAll();
 		roomsList1 = roomDao.readAll();
 		System.out.println("Oto lista roomsList1 - " + roomsList1);
 
 		for (Guest g : guestsList) {
 			guestL.addElement(g.getFirst_name() + " " + g.getLast_name() + " " + g.getPesel());
+
 		}
-		System.out.println(guestL);
 				
-		System.out.println("przed petla tworzaca liste pokoi");
+		log.info("Przed petla tworzaca liste pokoji");
 		for (Room rr : roomsList1) {
 			roomsL.addElement(rr.getRoomNumber());
-			System.out.println(rr.getRoomNumber());
+			log.info("Oto dodany element do listy pokoji - "+rr.getRoomNumber());
 		}
-
-		System.out.println("Jestem za petla");
-		System.out.println(roomsL);
+		log.info("Za petla tworzaca liste pokoji");
+		
 
 		guestList = new JList<String>(guestL);
 		scroll = new JScrollPane(guestList);
@@ -98,7 +108,7 @@ public class GuestCheckIn {
 
 		guestList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
-				System.out.println("oto wybrant element - " + guestList.getSelectedValue());
+				log.info("Oto wybrany elememnt z listy gosci - "+guestList.getSelectedValue());
 				data.setText(guestList.getSelectedValue());
 			}
 		});
@@ -106,23 +116,23 @@ public class GuestCheckIn {
 		roomsList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
 				data1.setText(roomsList.getSelectedValue());
-				System.out.println("oto wybrany element z listy pokoji - " + roomsList.getSelectedValue());
+				log.info("Oto wybrany element z listy pokoji - "+roomsList.getSelectedValue());
 			}
 
 		});
 
 		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				log.info("Wcisniety przysick OK w Guest Check-in");
 				ApplicationContext context1 = new AnnotationConfigApplicationContext(Session_FactoryImpl.class);
 				Session_FactoryImpl sessionFactory1 = context1.getBean(Session_FactoryImpl.class);
 				SessionFactory sessionFactory = sessionFactory1.SessionFact();
 				String[] splited = guestList.getSelectedValue().split(" ");
 				try {
-					System.out.println("wykonujeb metode select - wyszukuje obiekt z tabeli Guests");
+					log.info("Wykonywana metoda Select - wyszukanie obiektow w tabeli guest");
 					Session session = sessionFactory.openSession();
 					session.beginTransaction();
-					System.out.println("Oto pesel wybranego goscia - "+splited[2]);
+					log.info("Oto PESEL wybranego goœcia - "+splited[2]);
 					q1 = session.createQuery("from Guest g Where g.guestPesel =:pesel");
 					q1.setParameter("pesel", splited[2]);
 					resultGuest = (Guest) q1.getSingleResult();
@@ -133,14 +143,13 @@ public class GuestCheckIn {
 				}
 				
 				try {
-					
-					System.out.println("wykonujeb metode select - wyszukuje obiekt z tabeli Room");
+					log.info("Wykonuje metode SELECT - wyszukuje obiektow w tabeli Room");
 					Session session = sessionFactory.openSession();
 					session.beginTransaction();
 					r1 = session.createQuery("from Room r Where r.roomNumber =:number");
 					r1.setParameter("number", roomsList.getSelectedValue());
 					resultRoom = (Room) r1.getSingleResult();
-					System.out.println("oto wybrany gosc do check in - "+resultGuest.getPesel());
+					log.info("Oto wybramy gosc do check-in - "+resultGuest.getPesel());
 					room.getGuests().add(resultGuest);
 					session.save(room);
 					session.save(resultRoom);
@@ -148,6 +157,7 @@ public class GuestCheckIn {
 					session.close();
 					
 				} catch (Exception e) {
+					log.info("Rzucony wyjatek w tranzakcji w GuestCheckIn");
 					e.printStackTrace();
 				}
 				((AnnotationConfigApplicationContext)context1).close();
@@ -158,9 +168,15 @@ public class GuestCheckIn {
 		backButton.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent arg0) {
+				log.info("Wycisniety przycisk BACK w Guest Check-in");
 				ramka.remove(panel1);
 				ramka.remove(panel2);
-				new GuestWindow(ramka);
+				
+				ApplicationContext context = new AnnotationConfigApplicationContext(DatabaaseMainWindow.class);
+				DatabaaseMainWindow window = context.getBean(DatabaaseMainWindow.class);
+				window.WindowDisplay(ramka);
+				((AnnotationConfigApplicationContext)context).close();
+				
 				ramka.repaint();
 				ramka.validate();
 			}

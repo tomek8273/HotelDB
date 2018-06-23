@@ -14,8 +14,10 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -41,11 +43,12 @@ public class GuestCheckOut {
 	private JScrollPane scroll;
 
 	private JList<String> guestsListInHotel;
+	
 	private GuestDaoImpl guestDao;
+	private static Logger log = Logger.getLogger(GuestCheckIn.class);
 
 	public GuestCheckOut(final JFrame ramka) {
 
-		guestDao = new GuestDaoImpl();
 		guestsL = new DefaultListModel<String>();
 		okButton = new JButton("OK");
 		back = new JButton("Back");
@@ -58,11 +61,16 @@ public class GuestCheckOut {
 		scroll = new JScrollPane();
 		panel.add(label);
 
+
+		ApplicationContext context1 = new AnnotationConfigApplicationContext(GuestDaoImpl.class);
+		guestDao= context1.getBean(GuestDaoImpl.class);
+		((AnnotationConfigApplicationContext)context1).close();
+		
 		guestsInHotel = (ArrayList<Guest>) guestDao.readAllinHotel();
 
 		for (Guest g : guestsInHotel) {
 			guestsL.addElement(g.getPesel());
-			System.out.println("Oto gosc w Hotelu - " + g.getPesel());
+			log.info("Oto gosc w Hotelu - "+g.getPesel());
 
 		}
 
@@ -91,6 +99,7 @@ public class GuestCheckOut {
 		okButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
+				log.info("Wcisniety przycisk OK w GuestCheckIn");
 				ApplicationContext context1 = new AnnotationConfigApplicationContext(Session_FactoryImpl.class);
 				Session_FactoryImpl sessionFactory1 = context1.getBean(Session_FactoryImpl.class);
 				SessionFactory sessionFactory = sessionFactory1.SessionFact();
@@ -105,7 +114,7 @@ public class GuestCheckOut {
 					for (Room r : listOfRooms) {
 						for (Guest g : r.getGuests()) {
 							if (g.getPesel().equals(guestsListInHotel.getSelectedValue())) {
-								System.out.println("Znaleziono goscia do usuniecia");
+								log.info("Znaleziono goscia do usuniecia - "+g.getPesel());
 								guestForInvoice = g;
 								Session session1 = sessionFactory.openSession();
 								session1.beginTransaction();
@@ -119,6 +128,7 @@ public class GuestCheckOut {
 
 				} catch (Exception e1) {
 					e1.printStackTrace();
+					log.info("Wyjatek w czasie wykonywania tranzakcji");
 				}
 
 				ramka.remove(panel);

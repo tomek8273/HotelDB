@@ -64,7 +64,7 @@ public class RoomMainWindow {
 				ramka.remove(panel);
 				ApplicationContext context = new AnnotationConfigApplicationContext(DatabaaseMainWindow.class);
 				DatabaaseMainWindow window = context.getBean(DatabaaseMainWindow.class);
-				window.WindowDisplay();
+				window.WindowDisplay(ramka);
 				((AnnotationConfigApplicationContext)context).close();
 			}
 		});

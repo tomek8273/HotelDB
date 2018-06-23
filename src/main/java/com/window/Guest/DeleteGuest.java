@@ -13,6 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
@@ -20,6 +22,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import com.dao.impl.GuestDaoImpl;
 import com.dao.impl.Session_FactoryImpl;
 import com.entity.Guest;
+
 
 public class DeleteGuest {
 	private JPanel panel;
@@ -34,10 +37,10 @@ public class DeleteGuest {
 	private JList<String> guestsList1;
 	private GuestDaoImpl guestDao;
 	private Query q1;
+	private static Logger log = Logger.getLogger(DeleteGuest.class);
 
 	public DeleteGuest(final JFrame ramka) {
 		
-		guestDao = new GuestDaoImpl();
 		guestsL = new DefaultListModel<String>();
 		okButton = new JButton("OK");
 		back = new JButton("Back");
@@ -49,11 +52,16 @@ public class DeleteGuest {
 		label = new JLabel("List of Guests in Hotel");
 		scroll = new JScrollPane();
 		panel.add(label);
+		
+		ApplicationContext context1 = new AnnotationConfigApplicationContext(GuestDaoImpl.class);
+		GuestDaoImpl guestDao= context1.getBean(GuestDaoImpl.class);
+		((AnnotationConfigApplicationContext)context1).close();
 
 		guestsList = (ArrayList<Guest>) guestDao.readAll();
 
 		for (Guest g : guestsList) {
 			guestsL.addElement(g.getPesel());
+			log.info("Dodany element to listy gosci");
 		}
 
 		guestsList1 = new JList(guestsL);
@@ -70,6 +78,7 @@ public class DeleteGuest {
 
 		back.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				log.info("Wcisniety przycisk BACK w DeleteGuest");
 				ramka.remove(panel1);
 				ramka.remove(panel2);
 				new GuestWindow(ramka);
@@ -79,12 +88,12 @@ public class DeleteGuest {
 		okButton.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				
+				log.info("Wcisniety przycisk OK w DELETE GUEST");
 				ApplicationContext context1 = new AnnotationConfigApplicationContext(Session_FactoryImpl.class);
 				Session_FactoryImpl sessionFactory1 = context1.getBean(Session_FactoryImpl.class);
 				SessionFactory sessionFactory = sessionFactory1.SessionFact();
 				try {
-					System.out.println("wykonujeb metode DELETE - usowam wybranego goscia");
+					log.info("Wykonywana kewredna DELETE w DELETE GUEST");
 					Session session = sessionFactory.openSession();
 					session.beginTransaction();
 					q1 = session.createQuery("delete Guest g Where g.guestPesel =:pesel");
@@ -92,6 +101,7 @@ public class DeleteGuest {
 					int result = q1.executeUpdate();
 					session.close();
 				} catch (Exception e1) {
+					log.info("Rzucony wyj¹tek w czasie wykonywania tranzakcji w DeleteGuest");
 					e1.printStackTrace();
 				}
 				((AnnotationConfigApplicationContext)context1).close();

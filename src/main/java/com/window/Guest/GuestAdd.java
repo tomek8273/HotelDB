@@ -11,6 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -19,10 +21,11 @@ import com.entity.Guest;
 
 public class GuestAdd {
 
-	JPanel panel;
-	JPanel panel2;
-	JPanel panel3;
-	JButton back;
+	private JPanel panel;
+	private JPanel panel2;
+	private JPanel panel3;
+	private JButton back;
+	private static Logger log = Logger.getLogger(GuestCheckIn.class);
 
 	public GuestAdd(final JFrame ramka) {
 		panel = new JPanel();
@@ -69,6 +72,7 @@ public class GuestAdd {
 
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				log.info("Wcisniety przycisk OK w GuestAdd");
 				Guest guest = new Guest();
 				guest.setFirst_name(text.getText());
 				guest.setLast_name(text1.getText());
@@ -76,7 +80,7 @@ public class GuestAdd {
 				guest.setPesel(text3.getText());
 
 				ApplicationContext context1 = new AnnotationConfigApplicationContext(GuestDaoImpl.class);
-				GuestDaoImpl guestDao = context1.getBean(GuestDaoImpl.class);
+				GuestDaoImpl guestDao= context1.getBean(GuestDaoImpl.class);
 				guestDao.add(guest);
 				((AnnotationConfigApplicationContext)context1).close();
 			}
@@ -85,6 +89,7 @@ public class GuestAdd {
 		back.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
+				log.info("Wcisniety przycisk BACK w GuestAdd");
 				System.out.println("przycisniety przycisk back");
 				ramka.remove(panel);
 				ramka.remove(panel2);

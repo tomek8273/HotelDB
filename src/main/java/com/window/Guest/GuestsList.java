@@ -17,17 +17,17 @@ import com.dao.impl.GuestDaoImpl;
 import com.entity.Guest;
 
 public class GuestsList {
-JPanel panel1;
-JPanel panel2;
-JPanel panel3;
-JLabel label;
-JButton backButton;
-ArrayList<Guest> guestsList;
-GuestDaoImpl guestDao;
-JScrollPane scroll;
-DefaultListModel<String> guestsL;
-JList<String> guestsList1;
-JList<String> guestList;
+private JPanel panel1;
+private JPanel panel2;
+private JPanel panel3;
+private JLabel label;
+private JButton backButton;
+private ArrayList<Guest> guestsList;
+private GuestDaoImpl guestDao;
+private JScrollPane scroll;
+private DefaultListModel<String> guestsL;
+private JList<String> guestsList1;
+private JList<String> guestList;
 
 	public GuestsList(final JFrame ramka) {
 		

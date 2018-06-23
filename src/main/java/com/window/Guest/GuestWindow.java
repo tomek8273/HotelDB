@@ -11,8 +11,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import com.dao.impl.GuestDaoImpl;
 
 public class GuestWindow {
 	
@@ -21,6 +24,7 @@ public class GuestWindow {
 	private JPanel panel3;
 	private JButton guestCheckIn = new JButton("Check-in");
 	private JButton guestCheckOut = new JButton("Check-out");
+	private static Logger log = Logger.getLogger(GuestWindow.class);
 	
 	public GuestWindow(final JFrame ramka) {
 		panel2 = new JPanel(new FlowLayout());
@@ -65,6 +69,7 @@ public class GuestWindow {
 		guestadd.addActionListener (new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
+				log.info("Wcisniety przycisk AddGuest");
 				ramka.remove(panel);
 				ramka.remove(panel2);
 				ramka.remove(panel3);
@@ -77,6 +82,7 @@ public class GuestWindow {
 		guestDelete.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
+				log.info("Wcisniety przycisk guestDelete");
 				ramka.remove(panel);
 				ramka.remove(panel2);
 				ramka.remove(panel3);
@@ -85,7 +91,9 @@ public class GuestWindow {
 		});
 		
 		guestCheckIn.addActionListener(new ActionListener() {
+			
 			public void actionPerformed(ActionEvent arg0) {
+				log.info("Wcisniety przycisk guestCheckIn");
 				ramka.remove(panel);
 				ramka.remove(panel2);
 				ramka.remove(panel3);
@@ -97,6 +105,7 @@ public class GuestWindow {
 		guestCheckOut.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
+				log.info("Wcisniety przycisk guestCheckOut");
 				ramka.remove(panel);
 				ramka.remove(panel2);
 				ramka.remove(panel3);
@@ -109,12 +118,13 @@ public class GuestWindow {
 		back.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
+				log.info("Wcisniety przycisk BACK");
 				ramka.remove(panel);
 				ramka.remove(panel2);
 				ramka.remove(panel3);
 				ApplicationContext context = new AnnotationConfigApplicationContext(DatabaaseMainWindow.class);
 				DatabaaseMainWindow window = context.getBean(DatabaaseMainWindow.class);
-				window.WindowDisplay();
+				window.WindowDisplay(ramka);
 				((AnnotationConfigApplicationContext)context).close();
 			}
 		});
@@ -122,6 +132,7 @@ public class GuestWindow {
 		guestsList.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
+				log.info("Wcisniety przycisk guestsList");
 				ramka.remove(panel);
 				ramka.remove(panel2);
 				ramka.remove(panel3);
