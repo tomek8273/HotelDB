@@ -20,7 +20,7 @@ public class AspectClass {
 		System.out.println("Wykonuje aspekt2-------------------------------------------");
 	}
 	
-	@Before("execution(public * readAll())")
+	@Before("execution(public void WindowDisplay(..))")
 	public void WykonajAspekt3() {
 		System.out.println("Wykonuje aspekt3-----------------------------------------------");
 	}

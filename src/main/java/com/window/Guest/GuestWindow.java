@@ -25,6 +25,10 @@ public class GuestWindow {
 	private JButton guestCheckIn = new JButton("Check-in");
 	private JButton guestCheckOut = new JButton("Check-out");
 	private static Logger log = Logger.getLogger(GuestWindow.class);
+	private final int frameWidth = 500;
+	private final int frameHeight = 500;
+	private final int buttonWidth = 150;
+	private final int buttonHeight = 50;
 	
 	public GuestWindow(final JFrame ramka) {
 		panel2 = new JPanel(new FlowLayout());
@@ -37,19 +41,19 @@ public class GuestWindow {
 		ramka.add(panel, BorderLayout.NORTH);
 		ramka.add(panel3, BorderLayout.SOUTH);
 		ramka.setVisible(true);
-		ramka.setSize(500, 500);
+		ramka.setSize(frameWidth, frameHeight);
 		
 		JButton guestadd = new JButton("New Guest");
 		JButton guestDelete = new JButton("Guest Delete");
 		JButton guestUpdate = new JButton("Guet Update");
 		JButton guestsList = new JButton("Guests List");
 		
-		guestadd.setPreferredSize(new Dimension(150,50));
-		guestDelete.setPreferredSize(new Dimension(150,50));
-		guestUpdate.setPreferredSize(new Dimension(150,50));
-		guestsList.setPreferredSize(new Dimension(150,50));
-		guestCheckIn.setPreferredSize(new Dimension(150, 50));
-		guestCheckOut.setPreferredSize(new Dimension(150, 50));
+		guestadd.setPreferredSize(new Dimension(buttonWidth,buttonHeight));
+		guestDelete.setPreferredSize(new Dimension(buttonWidth,buttonHeight));
+		guestUpdate.setPreferredSize(new Dimension(buttonWidth,buttonHeight));
+		guestsList.setPreferredSize(new Dimension(buttonWidth,buttonHeight));
+		guestCheckIn.setPreferredSize(new Dimension(buttonWidth,buttonHeight));
+		guestCheckOut.setPreferredSize(new Dimension(buttonWidth,buttonHeight));
 		
 		JButton back = new JButton("Back");
 		panel3.add(back);

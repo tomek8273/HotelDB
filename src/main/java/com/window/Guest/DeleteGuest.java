@@ -35,7 +35,6 @@ public class DeleteGuest {
 	private JButton back;
 	private JScrollPane scroll;
 	private JList<String> guestsList1;
-	private GuestDaoImpl guestDao;
 	private Query q1;
 	private static Logger log = Logger.getLogger(DeleteGuest.class);
 
