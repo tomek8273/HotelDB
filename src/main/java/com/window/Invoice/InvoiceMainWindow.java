@@ -32,17 +32,45 @@ public class InvoiceMainWindow {
 		panel.add(invoiceList);
 		panel1.add(back);
 		
+		ramka.add(panel, BorderLayout.CENTER);
+		ramka.add(panel1, BorderLayout.SOUTH);
+		ramka.repaint();
+		ramka.validate();
+		
 		back.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ramka.remove(panel);
 				ramka.remove(panel1);
 				new GuestWindow(ramka);
+				ramka.repaint();
+				ramka.revalidate();
+			
 			}
 		});
 		
-		ramka.add(panel, BorderLayout.CENTER);
-		ramka.add(panel1, BorderLayout.SOUTH);
-		ramka.repaint();
-		ramka.validate();
+		invoicePay.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				ramka.remove(panel);
+				ramka.remove(panel1);
+				new InvoicePay(ramka);
+				ramka.repaint();
+				ramka.revalidate();
+				
+			}
+		});
+		
+		invoiceAdd.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				ramka.remove(panel);
+				ramka.remove(panel1);
+			//	new CreateInvoice(ramka, guest);
+				ramka.repaint();
+				ramka.revalidate();
+				
+			}
+		});
+		
 	}
 }

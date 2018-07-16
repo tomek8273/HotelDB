@@ -9,22 +9,22 @@ import com.service.GuestService;
 public class GuestServiceImpl implements GuestService {
 
 	@Autowired
-	private GuestDao DaoGuest;
+	private GuestDao guestDao;
 
 	public void addGuest(Guest guest) {
-		DaoGuest.add(guest);
+		guestDao.add(guest);
 	}
 
 	public void removeGuest(Guest guest) {
-		DaoGuest.remove(guest);
+		guestDao.remove(guest);
 	}
 
 	public GuestDao getDaoGuest() {
-		return DaoGuest;
+		return guestDao;
 	}
 
 	public void setDaoGuest(GuestDao daoGuest) {
-		DaoGuest = daoGuest;
+		guestDao = daoGuest;
 	}
 
 	public void updateGuest(Guest guest) {
@@ -33,16 +33,16 @@ public class GuestServiceImpl implements GuestService {
 	}
 
 	public void readGuestList(Guest guest) {
-		DaoGuest.read(guest);
+		guestDao.read(guest);
 	}
 
 	public List<Guest> readAll() {
 		System.out.println("jestem w metodzie readAll w GuestService");
-		return DaoGuest.readAll();
+		return guestDao.readAll();
 	}
 	
 	public List<Guest> readAllinHotel(){
-		return DaoGuest.readAllinHotel();
+		return guestDao.readAllinHotel();
 	}
 
 }
